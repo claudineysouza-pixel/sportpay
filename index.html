@@ -62,95 +62,10 @@
        Se quiser inserir sua logo, substitua o bloco abaixo por:
        <img src="SUA_LOGO.png" alt="Sport Pay" style="height:44px">
     ───────────────────────────────────────────────────────────── */
-    <img src="logo.png" alt="Sport Pay" style="height:44px">
+    <img src="Design sem nome (7).png" alt="Sport Pay" style="height:44px">
 
     /* Logo de texto (visível enquanto não tiver imagem) */
-    .logo-text {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.9rem;
-      color: var(--white);
-      letter-spacing: 2px;
-      line-height: 1;
-    }
-    .logo-text span { color: var(--red); }
-
-    .nav-links {
-      display: flex;
-      gap: 36px;
-      list-style: none;
-    }
-
-    .nav-links a {
-      color: rgba(255,255,255,.75);
-      text-decoration: none;
-      font-size: .92rem;
-      font-weight: 500;
-      letter-spacing: .5px;
-      transition: color .2s;
-      position: relative;
-    }
-
-    .nav-links a::after {
-      content: '';
-      position: absolute;
-      left: 0; bottom: -4px;
-      width: 0; height: 2px;
-      background: var(--red);
-      transition: width .25s;
-    }
-
-    .nav-links a:hover { color: var(--white); }
-    .nav-links a:hover::after { width: 100%; }
-
-    .nav-cta {
-      background: var(--red);
-      color: var(--white) !important;
-      padding: 9px 22px;
-      border-radius: 6px;
-      font-weight: 600 !important;
-      transition: background .2s, transform .15s !important;
-    }
-    .nav-cta::after { display: none !important; }
-    .nav-cta:hover { background: var(--red-dk) !important; transform: translateY(-1px); }
-
-    /* hamburger */
-    .hamburger {
-      display: none;
-      flex-direction: column;
-      gap: 5px;
-      cursor: pointer;
-      background: none;
-      border: none;
-      padding: 4px;
-    }
-    .hamburger span {
-      display: block;
-      width: 26px; height: 2px;
-      background: var(--white);
-      border-radius: 2px;
-      transition: all .3s;
-    }
-
-    .mobile-menu {
-      display: none;
-      position: fixed;
-      top: 77px; left: 0; right: 0;
-      background: rgba(10,10,10,.97);
-      padding: 24px 6%;
-      flex-direction: column;
-      gap: 20px;
-      z-index: 99;
-      border-bottom: 2px solid var(--red);
-    }
-    .mobile-menu.open { display: flex; }
-    .mobile-menu a {
-      color: var(--white);
-      text-decoration: none;
-      font-size: 1.1rem;
-      font-weight: 500;
-      padding: 8px 0;
-      border-bottom: 1px solid rgba(255,255,255,.08);
-    }
+   
 
     /* ── HERO ──────────────────────────────────────────────── */
     .hero {
