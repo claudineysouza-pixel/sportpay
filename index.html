@@ -1,0 +1,1254 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sport Pay – Tecnologia que Impulsiona seu Negócio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ── RESET & VARIABLES ─────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --red:    #e41e2f;
+      --red-dk: #b8151f;
+      --red-lt: #ff3346;
+      --white:  #ffffff;
+      --black:  #0a0a0a;
+      --gray:   #f5f5f5;
+      --gray-2: #e8e8e8;
+      --text:   #1a1a1a;
+      --muted:  #666;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: var(--white);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ── SCROLLBAR ─────────────────────────────────────────── */
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: var(--black); }
+    ::-webkit-scrollbar-thumb { background: var(--red); border-radius: 4px; }
+
+    /* ── NAVBAR ────────────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 6%;
+      background: rgba(10,10,10,0.92);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(228,30,47,0.2);
+      transition: padding .3s;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    /* ──────────────────────────────────────────────────────────
+       LOGO PLACEHOLDER
+       Se quiser inserir sua logo, substitua o bloco abaixo por:
+       <img src="SUA_LOGO.png" alt="Sport Pay" style="height:44px">
+    ───────────────────────────────────────────────────────────── */
+    .logo-img {
+      height: 44px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    /* Logo de texto (visível enquanto não tiver imagem) */
+    .logo-text {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.9rem;
+      color: var(--white);
+      letter-spacing: 2px;
+      line-height: 1;
+    }
+    .logo-text span { color: var(--red); }
+
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: rgba(255,255,255,.75);
+      text-decoration: none;
+      font-size: .92rem;
+      font-weight: 500;
+      letter-spacing: .5px;
+      transition: color .2s;
+      position: relative;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      left: 0; bottom: -4px;
+      width: 0; height: 2px;
+      background: var(--red);
+      transition: width .25s;
+    }
+
+    .nav-links a:hover { color: var(--white); }
+    .nav-links a:hover::after { width: 100%; }
+
+    .nav-cta {
+      background: var(--red);
+      color: var(--white) !important;
+      padding: 9px 22px;
+      border-radius: 6px;
+      font-weight: 600 !important;
+      transition: background .2s, transform .15s !important;
+    }
+    .nav-cta::after { display: none !important; }
+    .nav-cta:hover { background: var(--red-dk) !important; transform: translateY(-1px); }
+
+    /* hamburger */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+    .hamburger span {
+      display: block;
+      width: 26px; height: 2px;
+      background: var(--white);
+      border-radius: 2px;
+      transition: all .3s;
+    }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 77px; left: 0; right: 0;
+      background: rgba(10,10,10,.97);
+      padding: 24px 6%;
+      flex-direction: column;
+      gap: 20px;
+      z-index: 99;
+      border-bottom: 2px solid var(--red);
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      color: var(--white);
+      text-decoration: none;
+      font-size: 1.1rem;
+      font-weight: 500;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+
+    /* ── HERO ──────────────────────────────────────────────── */
+    .hero {
+      min-height: 100vh;
+      background: var(--black);
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      padding: 120px 6% 80px;
+    }
+
+    /* grid diagonal background */
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(135deg, rgba(228,30,47,.12) 0%, transparent 55%),
+        repeating-linear-gradient(
+          45deg,
+          rgba(255,255,255,.018) 0px,
+          rgba(255,255,255,.018) 1px,
+          transparent 1px,
+          transparent 60px
+        );
+    }
+
+    /* red accent shape */
+    .hero::after {
+      content: '';
+      position: absolute;
+      right: -120px; top: -120px;
+      width: 700px; height: 700px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(228,30,47,.25) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 700px;
+      animation: fadeUp .9s ease both;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(228,30,47,.15);
+      border: 1px solid rgba(228,30,47,.4);
+      color: var(--red-lt);
+      font-size: .8rem;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 6px 16px;
+      border-radius: 50px;
+      margin-bottom: 28px;
+    }
+    .hero-badge::before {
+      content: '';
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--red);
+      animation: pulse 2s infinite;
+    }
+
+    .hero h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3.2rem, 8vw, 6.5rem);
+      line-height: .95;
+      color: var(--white);
+      letter-spacing: 2px;
+      margin-bottom: 24px;
+    }
+
+    .hero h1 em {
+      color: var(--red);
+      font-style: normal;
+      display: block;
+    }
+
+    .hero p {
+      font-size: clamp(1rem, 2vw, 1.18rem);
+      color: rgba(255,255,255,.65);
+      line-height: 1.75;
+      max-width: 520px;
+      margin-bottom: 40px;
+    }
+
+    .hero-btns {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--red);
+      color: var(--white);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1rem;
+      padding: 15px 32px;
+      border-radius: 8px;
+      transition: background .2s, transform .15s, box-shadow .2s;
+      box-shadow: 0 4px 24px rgba(228,30,47,.35);
+    }
+    .btn-primary:hover {
+      background: var(--red-dk);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(228,30,47,.45);
+    }
+
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: transparent;
+      color: var(--white);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 14px 30px;
+      border-radius: 8px;
+      border: 1.5px solid rgba(255,255,255,.25);
+      transition: border-color .2s, background .2s;
+    }
+    .btn-outline:hover {
+      border-color: var(--white);
+      background: rgba(255,255,255,.06);
+    }
+
+    /* hero image / device mockup */
+    .hero-visual {
+      position: absolute;
+      right: 5%;
+      bottom: 0;
+      width: 42%;
+      max-width: 560px;
+      z-index: 1;
+      animation: floatUp 1.1s ease both .2s;
+    }
+
+    /* ──────────────────────────────────────────────────────────
+       IMAGEM DA MAQUININHA
+       Substitua o src abaixo pela imagem real da maquininha
+       Exemplo: <img src="maquininha.png" ...>
+    ───────────────────────────────────────────────────────────── */
+    .hero-visual img {
+      width: 100%;
+      filter: drop-shadow(0 32px 64px rgba(228,30,47,.25));
+    }
+
+    /* placeholder quando não tem imagem */
+    .device-placeholder {
+      width: 100%;
+      aspect-ratio: 3/5;
+      background: linear-gradient(145deg, #1c1c1c, #111);
+      border-radius: 28px;
+      border: 2px solid rgba(228,30,47,.3);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      color: rgba(255,255,255,.3);
+      font-size: .88rem;
+      text-align: center;
+      padding: 24px;
+    }
+    .device-placeholder svg { opacity: .3; }
+
+    /* stats bar */
+    .stats-bar {
+      position: relative;
+      z-index: 3;
+      background: var(--red);
+      display: flex;
+      justify-content: center;
+      gap: 0;
+      flex-wrap: wrap;
+    }
+
+    .stat-item {
+      padding: 28px 48px;
+      text-align: center;
+      color: var(--white);
+      border-right: 1px solid rgba(255,255,255,.2);
+      flex: 1;
+      min-width: 180px;
+    }
+    .stat-item:last-child { border-right: none; }
+
+    .stat-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.6rem;
+      letter-spacing: 2px;
+      line-height: 1;
+      display: block;
+    }
+    .stat-label {
+      font-size: .82rem;
+      font-weight: 500;
+      opacity: .85;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 4px;
+      display: block;
+    }
+
+    /* ── SECTION UTILS ─────────────────────────────────────── */
+    section { padding: 100px 6%; }
+
+    .section-label {
+      display: inline-block;
+      font-size: .75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2.5px;
+      color: var(--red);
+      margin-bottom: 14px;
+    }
+
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.2rem, 5vw, 3.8rem);
+      letter-spacing: 1.5px;
+      line-height: 1;
+      color: var(--black);
+      margin-bottom: 18px;
+    }
+
+    .section-sub {
+      font-size: 1.05rem;
+      color: var(--muted);
+      line-height: 1.75;
+      max-width: 560px;
+    }
+
+    /* ── ABOUT ─────────────────────────────────────────────── */
+    #sobre {
+      background: var(--gray);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .about-img-wrap {
+      position: relative;
+      border-radius: 18px;
+      overflow: hidden;
+      aspect-ratio: 4/3;
+      background: linear-gradient(135deg, #1a1a1a, #2c2c2c);
+    }
+
+    /* ──────────────────────────────────────────────────────────
+       IMAGEM DA SEÇÃO SOBRE
+       Substitua o fundo abaixo por <img src="sobre.jpg" ...>
+       Coloque a imagem com: width:100%; height:100%; object-fit:cover
+    ───────────────────────────────────────────────────────────── */
+    .about-img-placeholder {
+      width: 100%; height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      color: rgba(255,255,255,.3);
+      font-size: .85rem;
+      text-align: center;
+      padding: 24px;
+    }
+
+    .about-img-wrap::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 4px;
+      background: var(--red);
+    }
+
+    .about-text .section-title { margin-bottom: 22px; }
+
+    .about-text p {
+      font-size: 1rem;
+      color: #444;
+      line-height: 1.85;
+      margin-bottom: 16px;
+    }
+
+    .about-highlights {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .highlight-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: .95rem;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    .highlight-icon {
+      width: 36px; height: 36px;
+      border-radius: 8px;
+      background: var(--red);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    /* ── BENEFITS ──────────────────────────────────────────── */
+    #vantagens { background: var(--white); }
+
+    .benefits-header {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+    .benefits-header .section-sub { margin: 0 auto; }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 28px;
+    }
+
+    .card {
+      background: var(--white);
+      border: 1.5px solid var(--gray-2);
+      border-radius: 16px;
+      padding: 36px 30px;
+      transition: border-color .25s, transform .25s, box-shadow .25s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--red);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform .3s;
+    }
+
+    .card:hover {
+      border-color: rgba(228,30,47,.2);
+      transform: translateY(-6px);
+      box-shadow: 0 20px 50px rgba(0,0,0,.08);
+    }
+    .card:hover::before { transform: scaleX(1); }
+
+    .card-icon {
+      font-size: 2.4rem;
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    .card h3 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--black);
+      margin-bottom: 10px;
+    }
+
+    .card p {
+      font-size: .93rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    /* ── HOW IT WORKS ──────────────────────────────────────── */
+    #como-funciona {
+      background: var(--black);
+      color: var(--white);
+    }
+
+    #como-funciona .section-title { color: var(--white); }
+    #como-funciona .section-sub { color: rgba(255,255,255,.55); }
+
+    .steps-header {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+      margin-bottom: 72px;
+    }
+
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 2px;
+      background: rgba(255,255,255,.06);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    .step {
+      background: #111;
+      padding: 40px 32px;
+      transition: background .2s;
+      position: relative;
+    }
+    .step:hover { background: #161616; }
+
+    .step-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 4rem;
+      color: rgba(228,30,47,.2);
+      line-height: 1;
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .step h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 10px;
+    }
+
+    .step p {
+      font-size: .9rem;
+      color: rgba(255,255,255,.5);
+      line-height: 1.7;
+    }
+
+    /* ── CONTACT ───────────────────────────────────────────── */
+    #contato {
+      background: var(--gray);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .contact-info { padding-top: 16px; }
+    .contact-info .section-title { margin-bottom: 20px; }
+    .contact-info p { color: #555; line-height: 1.8; margin-bottom: 36px; }
+
+    .contact-detail {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--gray-2);
+      font-size: .95rem;
+      color: var(--text);
+    }
+
+    .contact-icon {
+      width: 42px; height: 42px;
+      border-radius: 10px;
+      background: var(--red);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+
+    .contact-label {
+      font-size: .75rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      display: block;
+    }
+    .contact-value { font-weight: 600; }
+
+    /* form */
+    .contact-form {
+      background: var(--white);
+      border-radius: 20px;
+      padding: 44px 40px;
+      box-shadow: 0 12px 48px rgba(0,0,0,.07);
+      border: 1px solid var(--gray-2);
+    }
+
+    .form-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.9rem;
+      letter-spacing: 1px;
+      color: var(--black);
+      margin-bottom: 6px;
+    }
+
+    .form-sub {
+      font-size: .9rem;
+      color: var(--muted);
+      margin-bottom: 30px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      font-size: .82rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text);
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 13px 16px;
+      border: 1.5px solid var(--gray-2);
+      border-radius: 8px;
+      font-family: 'Outfit', sans-serif;
+      font-size: .95rem;
+      color: var(--text);
+      background: var(--white);
+      outline: none;
+      transition: border-color .2s;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus { border-color: var(--red); }
+    .form-group textarea { min-height: 110px; resize: vertical; }
+
+    .btn-form {
+      width: 100%;
+      padding: 15px;
+      background: var(--red);
+      color: var(--white);
+      border: none;
+      border-radius: 8px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      letter-spacing: .5px;
+      transition: background .2s, transform .15s;
+    }
+    .btn-form:hover { background: var(--red-dk); transform: translateY(-1px); }
+
+    /* success message */
+    .form-success {
+      display: none;
+      text-align: center;
+      padding: 24px;
+      color: #2e7d32;
+      font-weight: 600;
+      font-size: 1rem;
+      background: #e8f5e9;
+      border-radius: 8px;
+      margin-top: 16px;
+    }
+
+    /* ── WHATSAPP FLOAT ────────────────────────────────────── */
+    .wa-float {
+      position: fixed;
+      bottom: 28px; right: 28px;
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: #25d366;
+      color: var(--white);
+      text-decoration: none;
+      padding: 14px 22px;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: .9rem;
+      box-shadow: 0 8px 28px rgba(37,211,102,.4);
+      transition: transform .2s, box-shadow .2s;
+      animation: slideIn .6s ease both 1s;
+    }
+    .wa-float:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 36px rgba(37,211,102,.5);
+    }
+    .wa-float svg { flex-shrink: 0; }
+
+    /* ── FOOTER ────────────────────────────────────────────── */
+    footer {
+      background: var(--black);
+      color: rgba(255,255,255,.55);
+      padding: 56px 6% 36px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 60px;
+      padding-bottom: 48px;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+      margin-bottom: 32px;
+    }
+
+    .footer-brand .logo-text { display: block; margin-bottom: 16px; font-size: 2rem; }
+
+    .footer-brand p {
+      font-size: .9rem;
+      line-height: 1.8;
+      max-width: 320px;
+      margin-bottom: 24px;
+    }
+
+    .footer-col h4 {
+      font-size: .8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--white);
+      margin-bottom: 18px;
+    }
+
+    .footer-col ul { list-style: none; }
+    .footer-col ul li { margin-bottom: 10px; }
+    .footer-col ul li a {
+      color: rgba(255,255,255,.5);
+      text-decoration: none;
+      font-size: .9rem;
+      transition: color .2s;
+    }
+    .footer-col ul li a:hover { color: var(--red-lt); }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: .82rem;
+    }
+
+    .footer-bottom span { color: rgba(255,255,255,.35); }
+    .footer-bottom strong { color: rgba(255,255,255,.55); font-weight: 500; }
+
+    .footer-red { color: var(--red) !important; }
+
+    /* ── ANIMATIONS ────────────────────────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(32px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes floatUp {
+      from { opacity: 0; transform: translateY(48px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: .5; transform: scale(.7); }
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(60px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+
+    /* reveal on scroll */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity .7s ease, transform .7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── RESPONSIVE ────────────────────────────────────────── */
+    @media (max-width: 1024px) {
+      #sobre, #contato { grid-template-columns: 1fr; gap: 48px; }
+      .steps-header { grid-template-columns: 1fr; gap: 32px; }
+      .hero-visual { display: none; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      section { padding: 72px 5%; }
+      .stat-item { padding: 22px 20px; }
+      .footer-grid { grid-template-columns: 1fr; gap: 36px; }
+      .contact-form { padding: 32px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAVBAR ──────────────────────────────────────────────── -->
+<nav id="navbar">
+  <a href="#inicio" class="nav-logo">
+    <!--
+      COMO INSERIR SUA LOGO:
+      1. Salve o arquivo da logo (ex: logo.png) na mesma pasta deste HTML
+      2. Substitua o bloco <span class="logo-text"> abaixo por:
+         <img src="logo.png" alt="Sport Pay" class="logo-img">
+    -->
+    <span class="logo-text">SPORT<span>PAY</span></span>
+  </a>
+
+  <ul class="nav-links">
+    <li><a href="#sobre">Sobre</a></li>
+    <li><a href="#vantagens">Vantagens</a></li>
+    <li><a href="#como-funciona">Como Funciona</a></li>
+    <li><a href="#contato">Contato</a></li>
+    <li><a href="https://wa.me/559984604555?text=Olá! Vim pelo site da Sport Pay e tenho interesse na maquininha." target="_blank" class="nav-cta">💬 Fale Conosco</a></li>
+  </ul>
+
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- Mobile menu -->
+<div class="mobile-menu" id="mobile-menu">
+  <a href="#sobre" onclick="closeMobile()">Sobre</a>
+  <a href="#vantagens" onclick="closeMobile()">Vantagens</a>
+  <a href="#como-funciona" onclick="closeMobile()">Como Funciona</a>
+  <a href="#contato" onclick="closeMobile()">Contato</a>
+  <a href="https://wa.me/559984604555?text=Olá! Vim pelo site da Sport Pay e tenho interesse na maquininha." target="_blank" style="color:#25d366 !important">💬 WhatsApp</a>
+</div>
+
+<!-- ── HERO ─────────────────────────────────────────────────── -->
+<section class="hero" id="inicio">
+  <div class="hero-content">
+    <div class="hero-badge">✦ Soluções em Pagamento</div>
+    <h1>Mais Lucro e<em>Mais Valor</em></h1>
+    <p>Maquininhas de cartão com tecnologia confiável, menores taxas do mercado e condições iguais para CPF e CNPJ — sem burocracia e com frete grátis.</p>
+    <div class="hero-btns">
+      <a href="https://wa.me/559984604555?text=Olá! Vim pelo site da Sport Pay e tenho interesse na maquininha." target="_blank" class="btn-primary">
+        💬 Quero minha maquininha
+      </a>
+      <a href="#sobre" class="btn-outline">Saiba mais ↓</a>
+    </div>
+  </div>
+
+  <!-- Imagem da maquininha -->
+  <div class="hero-visual">
+    <!--
+      COMO INSERIR A IMAGEM DA MAQUININHA:
+      1. Salve a imagem (ex: maquininha.png) na mesma pasta deste HTML
+      2. Substitua o bloco <div class="device-placeholder"> abaixo por:
+         <img src="maquininha.png" alt="Maquininha Sport Pay" class="logo-img" style="width:100%;filter:drop-shadow(0 32px 64px rgba(228,30,47,.25))">
+    -->
+    <div class="device-placeholder">
+      <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <rect x="5" y="2" width="14" height="20" rx="2"/>
+        <line x1="9" y1="7" x2="15" y2="7"/>
+        <rect x="8" y="11" width="2" height="2"/>
+        <rect x="11" y="11" width="2" height="2"/>
+        <rect x="14" y="11" width="2" height="2"/>
+        <rect x="8" y="14" width="2" height="2"/>
+        <rect x="11" y="14" width="2" height="2"/>
+        <rect x="14" y="14" width="2" height="2"/>
+        <rect x="8" y="17" width="2" height="2"/>
+        <rect x="11" y="17" width="2" height="2"/>
+        <rect x="14" y="17" width="2" height="2"/>
+      </svg>
+      <p>Insira aqui a imagem<br>da maquininha</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── STATS BAR ─────────────────────────────────────────────── -->
+<div class="stats-bar reveal">
+  <div class="stat-item">
+    <span class="stat-num">0%</span>
+    <span class="stat-label">Taxa de Adesão</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num">24h</span>
+    <span class="stat-label">Aprovação Rápida</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num">🚚</span>
+    <span class="stat-label">Frete Grátis</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num">CPF+CNPJ</span>
+    <span class="stat-label">Para Todos</span>
+  </div>
+</div>
+
+<!-- ── SOBRE ─────────────────────────────────────────────────── -->
+<section id="sobre">
+  <div class="about-img-wrap reveal">
+    <!--
+      COMO INSERIR UMA IMAGEM NESTA SEÇÃO:
+      Substitua o bloco <div class="about-img-placeholder"> por:
+      <img src="equipe.jpg" alt="Sport Pay" style="width:100%;height:100%;object-fit:cover">
+    -->
+    <div class="about-img-placeholder">
+      <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+        <rect x="3" y="3" width="18" height="18" rx="2"/>
+        <circle cx="8.5" cy="8.5" r="1.5"/>
+        <polyline points="21 15 16 10 5 21"/>
+      </svg>
+      <span>Insira aqui uma imagem<br>da sua empresa ou equipe</span>
+    </div>
+  </div>
+
+  <div class="about-text reveal">
+    <span class="section-label">Sobre nós</span>
+    <h2 class="section-title">Nascemos para<br>impulsionar você</h2>
+    <p>A Sport Pay nasceu com o propósito de levar mais lucro e mais valor para empreendedores de todo o Brasil. Oferecemos soluções completas em maquininhas de cartão, com tecnologia confiável, taxas competitivas e condições acessíveis para todos.</p>
+    <p>Aqui, tanto CPF quanto CNPJ têm as mesmas oportunidades, sem burocracia e com processos simples. Trabalhamos para garantir que você comece a vender rápido, com frete grátis e suporte próximo sempre que precisar.</p>
+    <p>Nosso compromisso é ajudar o seu negócio a crescer, com mais praticidade, economia e segurança em cada transação.</p>
+
+    <div class="about-highlights">
+      <div class="highlight-item">
+        <span class="highlight-icon">✓</span>
+        Tecnologia confiável e moderna
+      </div>
+      <div class="highlight-item">
+        <span class="highlight-icon">✓</span>
+        Suporte próximo sempre que precisar
+      </div>
+      <div class="highlight-item">
+        <span class="highlight-icon">✓</span>
+        Sem burocracia, processos simples
+      </div>
+      <div class="highlight-item">
+        <span class="highlight-icon">✓</span>
+        Segurança em cada transação
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── VANTAGENS ──────────────────────────────────────────────── -->
+<section id="vantagens">
+  <div class="benefits-header reveal">
+    <span class="section-label">Vantagens</span>
+    <h2 class="section-title">Por que escolher<br>a Sport Pay?</h2>
+    <p class="section-sub">Condições pensadas para facilitar a vida de quem vende, seja você autônomo ou empresa.</p>
+  </div>
+
+  <div class="cards-grid">
+    <div class="card reveal">
+      <span class="card-icon">💰</span>
+      <h3>Menores Taxas do Mercado</h3>
+      <p>Economize em cada venda. Nossas taxas foram desenvolvidas para maximizar o lucro do seu negócio sem abrir mão da qualidade.</p>
+    </div>
+    <div class="card reveal">
+      <span class="card-icon">🚚</span>
+      <h3>Frete 100% Grátis</h3>
+      <p>Receba sua maquininha em casa sem nenhum custo de envio. Entregamos em todo o Brasil, rápido e sem pegadinha.</p>
+    </div>
+    <div class="card reveal">
+      <span class="card-icon">🤝</span>
+      <h3>CPF e CNPJ Iguais</h3>
+      <p>Mesmas condições e oportunidades para pessoas físicas e jurídicas. Sem discriminação e sem burocracia desnecessária.</p>
+    </div>
+    <div class="card reveal">
+      <span class="card-icon">⚡</span>
+      <h3>Rápido e Fácil</h3>
+      <p>Aprovação em até 24 horas e você já começa a vender. Processo simples, sem papelada e sem complicação.</p>
+    </div>
+    <div class="card reveal">
+      <span class="card-icon">🔒</span>
+      <h3>Tecnologia Segura</h3>
+      <p>Transações protegidas com tecnologia de ponta. Seus clientes pagam com segurança e você recebe com tranquilidade.</p>
+    </div>
+    <div class="card reveal">
+      <span class="card-icon">📞</span>
+      <h3>Suporte Sempre Disponível</h3>
+      <p>Nossa equipe está pronta para ajudar sempre que você precisar. Atendimento rápido e próximo via WhatsApp.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── COMO FUNCIONA ───────────────────────────────────────────── -->
+<section id="como-funciona">
+  <div class="steps-header">
+    <div class="reveal">
+      <span class="section-label" style="color:#ff3346">Como Funciona</span>
+      <h2 class="section-title">Simples assim,<br>em 4 passos</h2>
+      <p class="section-sub">Da solicitação à primeira venda, o processo é rápido e descomplicado.</p>
+      <br>
+      <a href="https://wa.me/559984604555?text=Olá! Vim pelo site da Sport Pay e tenho interesse na maquininha." target="_blank" class="btn-primary" style="margin-top:16px;display:inline-flex">
+        Começar agora →
+      </a>
+    </div>
+    <div><!-- spacer --></div>
+  </div>
+
+  <div class="steps-grid reveal">
+    <div class="step">
+      <span class="step-num">01</span>
+      <h3>Entre em contato</h3>
+      <p>Fale com nosso time pelo WhatsApp ou preencha o formulário. É rápido e sem compromisso.</p>
+    </div>
+    <div class="step">
+      <span class="step-num">02</span>
+      <h3>Escolha seu plano</h3>
+      <p>Apresentamos as melhores opções e taxas disponíveis para o seu perfil de vendas.</p>
+    </div>
+    <div class="step">
+      <span class="step-num">03</span>
+      <h3>Aprovação em 24h</h3>
+      <p>Análise rápida e sem burocracia. Aprovação para CPF e CNPJ com as mesmas condições.</p>
+    </div>
+    <div class="step">
+      <span class="step-num">04</span>
+      <h3>Comece a vender!</h3>
+      <p>Receba sua maquininha com frete grátis e comece a vender imediatamente.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── CONTATO ────────────────────────────────────────────────── -->
+<section id="contato">
+  <div class="contact-info reveal">
+    <span class="section-label">Contato</span>
+    <h2 class="section-title">Fale com<br>a Sport Pay</h2>
+    <p>Informe seu nome e e-mail e entraremos em contato com você o mais rápido possível. Ou fale conosco diretamente pelo WhatsApp!</p>
+
+    <div class="contact-detail">
+      <div class="contact-icon">📧</div>
+      <div>
+        <span class="contact-label">E-mail</span>
+        <span class="contact-value">adm@sportpay.net.br</span>
+      </div>
+    </div>
+
+    <div class="contact-detail">
+      <div class="contact-icon">💬</div>
+      <div>
+        <span class="contact-label">WhatsApp</span>
+        <span class="contact-value">(99) 98460-4555</span>
+      </div>
+    </div>
+
+    <div class="contact-detail">
+      <div class="contact-icon">🏢</div>
+      <div>
+        <span class="contact-label">CNPJ</span>
+        <span class="contact-value">L DA S LIMA COMERCIO — 33.633.867/0001-33</span>
+      </div>
+    </div>
+
+    <br>
+    <a href="https://wa.me/559984604555?text=Olá! Vim pelo site da Sport Pay e tenho interesse na maquininha." target="_blank" class="btn-primary" style="display:inline-flex; margin-top:8px">
+      💬 Chamar no WhatsApp
+    </a>
+  </div>
+
+  <div class="contact-form reveal">
+    <p class="form-title">Envie uma Mensagem</p>
+    <p class="form-sub">Responderemos o mais breve possível.</p>
+
+    <div class="form-group">
+      <label for="nome">Nome completo</label>
+      <input type="text" id="nome" placeholder="Seu nome" />
+    </div>
+    <div class="form-group">
+      <label for="email">E-mail</label>
+      <input type="email" id="email" placeholder="seu@email.com" />
+    </div>
+    <div class="form-group">
+      <label for="telefone">Telefone / WhatsApp</label>
+      <input type="tel" id="telefone" placeholder="(00) 00000-0000" />
+    </div>
+    <div class="form-group">
+      <label for="mensagem">Mensagem (opcional)</label>
+      <textarea id="mensagem" placeholder="Conte um pouco sobre o seu negócio…"></textarea>
+    </div>
+
+    <button class="btn-form" onclick="submitForm()">Enviar mensagem ✉️</button>
+    <div class="form-success" id="form-success">
+      ✅ Mensagem enviada! Entraremos em contato em breve.
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ─────────────────────────────────────────────────── -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <span class="logo-text">SPORT<span>PAY</span></span>
+      <p>Soluções completas em maquininhas de cartão com tecnologia confiável, taxas competitivas e suporte próximo para empreendedores de todo o Brasil.</p>
+      <a href="https://wa.me/559984604555?text=Olá! Vim pelo site da Sport Pay e tenho interesse na maquininha." target="_blank" class="btn-primary" style="font-size:.88rem; padding:11px 22px; display:inline-flex">
+        💬 WhatsApp
+      </a>
+    </div>
+
+    <div class="footer-col">
+      <h4>Navegação</h4>
+      <ul>
+        <li><a href="#inicio">Início</a></li>
+        <li><a href="#sobre">Sobre a Sport Pay</a></li>
+        <li><a href="#vantagens">Vantagens</a></li>
+        <li><a href="#como-funciona">Como Funciona</a></li>
+        <li><a href="#contato">Contato</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Contato</h4>
+      <ul>
+        <li><a href="mailto:adm@sportpay.net.br">📧 adm@sportpay.net.br</a></li>
+        <li><a href="https://wa.me/559984604555" target="_blank">💬 (99) 98460-4555</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <span>© 2026 <strong>Sport Pay</strong> — Todos os direitos reservados</span>
+    <span>L DA S LIMA COMERCIO · CNPJ <strong>33.633.867/0001-33</strong></span>
+    <span>Feito com <span class="footer-red">♥</span> para empreendedores brasileiros</span>
+  </div>
+</footer>
+
+<!-- ── WHATSAPP FLOAT ─────────────────────────────────────────── -->
+<a href="https://wa.me/559984604555?text=Olá! Vim pelo site da Sport Pay e tenho interesse na maquininha." target="_blank" class="wa-float">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+  </svg>
+  Fale Conosco
+</a>
+
+<!-- ── SCRIPTS ─────────────────────────────────────────────────── -->
+<script>
+  // Hamburger menu
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobile-menu');
+
+  hamburger.addEventListener('click', () => {
+    mobileMenu.classList.toggle('open');
+  });
+
+  function closeMobile() {
+    mobileMenu.classList.remove('open');
+  }
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  reveals.forEach(el => observer.observe(el));
+
+  // Form submit (simulado – sem backend)
+  function submitForm() {
+    const nome    = document.getElementById('nome').value.trim();
+    const email   = document.getElementById('email').value.trim();
+    const success = document.getElementById('form-success');
+
+    if (!nome || !email) {
+      alert('Por favor, preencha pelo menos o nome e o e-mail.');
+      return;
+    }
+
+    // Aqui você pode integrar com um serviço de e-mail como Formspree ou EmailJS
+    // Por enquanto, apenas exibe a mensagem de sucesso
+    success.style.display = 'block';
+    document.getElementById('nome').value = '';
+    document.getElementById('email').value = '';
+    document.getElementById('telefone').value = '';
+    document.getElementById('mensagem').value = '';
+
+    setTimeout(() => { success.style.display = 'none'; }, 5000);
+  }
+
+  // Navbar shrink on scroll
+  window.addEventListener('scroll', () => {
+    const nav = document.getElementById('navbar');
+    if (window.scrollY > 60) {
+      nav.style.padding = '12px 6%';
+    } else {
+      nav.style.padding = '18px 6%';
+    }
+  });
+</script>
+</body>
+</html>
